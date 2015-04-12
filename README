@@ -1,0 +1,22 @@
+ConfigManager
+
+
+License
+=======
+GPLv3 or later, see LICENSE
+
+
+Simple Config Manager
+=====================
+A simple config parser build on top of the standard python configparser module
+that eases the use of config files.
+It is designed for a single config file. Sections are added if needed and
+options are immediatly saved to disk whenever you change a option with "set()".
+It also adds the methods "getlist" and "add_to_list" to handle lists.
+
+Furthermore, you can also specify the delimiters in the python2 version.
+
+
+Sebastian Schmidt
+schro.sb@gmail.com
+
