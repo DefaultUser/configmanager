@@ -36,9 +36,10 @@ class ConfigManager(ConfigParser, object):
     def __init__(self, path, delimiters=("=", ":")):
         # only change the regex for python 2
         if sys.version_info < (3, 0, 0):
+            d = "|".join(re.escape(d) for d in delimiters)
             self.SECTCRE = re.compile(self._TMPL_SECT)
-            self.OPTCRE = re.compile(self._TMPL_OPT.format(delimiters))
-            self.OPTCRE_NV = re.compile(self._TMPL_OPT_NV.format(delimiters))
+            self.OPTCRE = re.compile(self._TMPL_OPT.format(d))
+            self.OPTCRE_NV = re.compile(self._TMPL_OPT_NV.format(d))
             super(ConfigManager, self).__init__()
         else:
             super(ConfigManager, self).__init__(delimiters=delimiters)
@@ -72,7 +73,7 @@ class ConfigManager(ConfigParser, object):
         """Add a new value to a list"""
         if not self.has_section(section):
             self.add_section(section)
-        if self.has_option(section, option):
+        if self.option_set(section, option):
             l = self.getlist(section, option)
             l.append(value)
             value = l
