@@ -75,6 +75,8 @@ class ConfigManager(ConfigParser, object):
             self.add_section(section)
         if self.option_set(section, option):
             l = self.getlist(section, option)
+            if str(value) in l:
+                return
             l.append(value)
             value = l
         self.set(section, option, str(value))
