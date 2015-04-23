@@ -87,3 +87,16 @@ class ConfigManager(ConfigParser, object):
         for i, val in enumerate(l):
             l[i] = vtype(val.strip("'\" "))
         return l
+
+    def remove_from_list(self, section, option, value):
+        """Remove a value from a list"""
+        l = self.getlist(section, option)
+        l.remove(str(value))
+        # remove empty values
+        if not l:
+            self.remove_option(section, option)
+            self.write()
+        elif len(l) == 1:
+            self.set(section, option, l[0])
+        else:
+            self.set(section, option, str(l))
